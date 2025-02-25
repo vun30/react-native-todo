@@ -1,60 +1,45 @@
 import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { useState } from "react";
 export default function App() {
-  // const [name, setName] = useState<String>("eric");
-  // const [test, setTest] = useState({
-  //   name:'vu',
-  //   age: 22
-  // })
-  const [count, setCount] = useState<number>(0);
-  const [name, setName] = useState<String>("")
-  const [age,setAge] = useState<number>(0)
+  const [student, setStudents] = useState([
+    { id: 1, name: "vu1", age: "18" },
+    { id: 2, name: "vu2", age: "18" },
+    { id: 3, name: "vu3", age: "18" },
+    { id: 4, name: "vu4", age: "18" },
+    { id: 5, name: "vu5", age: "18" },
+    { id: 6, name: "vu6", age: "18" },
+    { id: 7, name: "vu6", age: "18" },
+    { id: 8, name: "vu6", age: "18" },
+    { id: 9, name: "vu6", age: "18" },
+    { id: 10, name: "vu6", age: "18" },
+  ]);
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={{ fontSize: 30 }}>Name:{name}</Text>
-        <TextInput
-          multiline
-          autoCapitalize={"words"}
-          onChangeText={(value) => setName(value)}
-          style={{
-            borderColor: "green",
-            borderWidth: 1,
-            width: 200,
-            padding: 15,
-          }}
-        ></TextInput>
-      </View>
-      <View>
-        <Text style={{ fontSize: 30 }}>Age:{age}</Text>
-        <TextInput
-          onChangeText={(value) => setAge(+value)}
-          style={{
-            borderColor: "green",
-            borderWidth: 1,
-            width: 200,
-            padding: 15,
-            
-          }}
-          keyboardType="numeric"
-          maxLength={2}
-        ></TextInput>
-      </View>
-      <Text style={{ color: "red", fontSize: 30 }}>Count = {count}</Text>
-      <View>
-        <Button title="Increase" onPress={() => setCount(count + 1)} />
-      </View>
-      <StatusBar style="auto" />
+      <Text style={{ fontSize: 30 }}>hello world</Text>
+      <ScrollView>
+        {student.map((item) => {
+          return (
+            <View
+              key={item.id}
+              style={{ padding: 14, backgroundColor: "pink", marginBottom: 23 }}
+            >
+              <Text>{item.name}</Text>
+            </View>
+          );
+        })}
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 20,
+    paddingHorizontal:50,
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    // alignItems: "center",
+    // justifyContent: "center",
   },
 });
