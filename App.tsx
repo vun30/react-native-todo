@@ -1,59 +1,82 @@
 import { StatusBar } from "expo-status-bar";
 import { Button, FlatList, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { useState } from "react";
+
+interface ITodo {
+  id: number;
+  name: string
+}
 export default function App() {
-  const [student, setStudents] = useState([
-    { id: 1, name: "vu1", age: "18" },
-    { id: 2, name: "vu2", age: "18" },
-    { id: 3, name: "vu3", age: "18" },
-    { id: 4, name: "vu4", age: "18" },
-    { id: 5, name: "vu5", age: "18" },
-    { id: 6, name: "vu6", age: "18" },
-    { id: 7, name: "vu6", age: "18" },
-    { id: 8, name: "vu6", age: "18" },
-    { id: 9, name: "vu6", age: "18" },
-    { id: 10, name: "vu6", age: "18" },
-  ]);
+  const [todo, setTodo] = useState("")
+  const [listTodo,setListTodo] = useState<ITodo[]>([])
+  const handleAddTodo = () => {
+    if(!todo) return
+    setListTodo([...listTodo, { id: randomInteger(2, 2000), name: todo }]);
+    setTodo("")
+  }
+
+  function randomInteger(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 30 }}>hello world</Text>
-
-      <FlatList
-        data={student}
-        keyExtractor={(item) => item.id + ""}
-        renderItem={(data) => {
+      <Text style={styles.header}>TodoApp</Text>
+      <View style={styles.body}>
+        <TextInput
+          style={styles.todoInput}
+          onChangeText={(value) => setTodo(value)}
+        />
+        <Button
+          title="Add Todo"
+          onPress = {handleAddTodo}
+          
+        />
+      </View>
+      <View style={styles.body}>
+        <FlatList 
+        keyExtractor={itme => itme.id + ""}
+        data={listTodo} 
+        renderItem={({item}) => {
           return (
-            <View
-              style={{ padding: 14, backgroundColor: "pink", marginBottom: 23, marginHorizontal:4}}
-            >
-              <Text>{data.item.name}</Text>
-            </View>
-          );
-        }}
-      ></FlatList>
-      {/* <ScrollView>
-        {student.map((item) => {
-          return (
-            <View
-              key={item.id}
-              style={{ padding: 14, backgroundColor: "pink", marginBottom: 23 }}
-            >
-              <Text>{item.name}</Text>
-            </View>
-          );
-        })}
-      </ScrollView> */}
+            <Text style={styles.todoItem}>{item.name}</Text>
+          )
+        }
+        }
+        ></FlatList>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  header: {
+    backgroundColor: "orange",
+    paddingHorizontal: 20,
+    textAlign: "center",
+    fontSize: 40
+  },
   container: {
-    paddingTop: 20,
-    paddingHorizontal:50,
+    paddingTop: 50,
     flex: 1,
     backgroundColor: "#fff",
-    // alignItems: "center",
-    // justifyContent: "center",
+
   },
+  todoInput: {
+    borderWidth: 1,
+    borderBlockColor: "green",
+    padding: 5,
+    margin: 15
+  },
+  body: {
+    paddingHorizontal: 10,
+    marginBottom: 20,
+  },
+  todoItem : {
+    fontSize: 30,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderStyle: "dashed",
+    padding: 10
+  }
 });
